@@ -1,15 +1,25 @@
 #ifndef PLANTFACTORY_H
 #define PLANTFACTORY_H
-using namespace std;
 
-#include "Plant.h"
+#include "PeaShooter.h"
+#include "Sunflower.h"
 
 // Abstract PlantFactory class
 class PlantFactory {
-
 public:
-    virtual Plant* createPlant(const std::string& type) = 0;
-    virtual ~PlantFactory() {}
+    virtual Plant* createPlant() = 0;
+};
+
+// Concrete PlantFactory classes
+
+class PeaShooterFactory : public PlantFactory {
+public:
+    Plant* createPlant() override;
+};
+
+class SunflowerFactory : public PlantFactory {
+public:
+    Plant* createPlant() override;
 };
 
 #endif // PLANTFACTORY_H
