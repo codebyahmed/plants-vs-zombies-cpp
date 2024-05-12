@@ -2,15 +2,16 @@
 #define TIME_H
 
 #include <chrono>
+#include <iomanip>
 using namespace std::chrono;
 
-class Time {
+class GameTime {
 private:
     time_point<steady_clock> startTime;
 
 public:
     // Constructor
-    Time();
+    GameTime();
     
     // Get the elapsed time since the start of the game
     float elapsedTime() const;

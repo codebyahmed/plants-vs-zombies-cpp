@@ -5,17 +5,19 @@
 
 class Sunflower : public Plant {
 private:
-    int sunProductionInterval; // Time interval for producing sun in seconds
+    // Information of the sun produced by the sunflower
+    int sunValue; // Sun value produced by the sunflower
+    float lastSunTime; // Last time the sun was produced
+    float sunInterval; // Time interval for producing sun in seconds
+    bool isSunAvailable; // True if sun is available to be collected
 
 public:
-    // Constructor signature
-    Sunflower(int health, int cost, int sunProductionInterval);
+    Sunflower(int x = -1, int y = -1, float elapsedGameTime = 0);
 
-    // Getter for sun production interval
-    int getSunProductionInterval() const;
+    int produce(RenderWindow &window, float elapsedGameTime, Event &event);
 
-    // Setter for sun production interval
-    void setSunProductionInterval(int interval);
+    // Not used in Sunflower
+    void attack(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount) {};
 };
 
 #endif // SUNFLOWER_H

@@ -1,102 +1,41 @@
 #include <SFML/Graphics.hpp>
-#include <ctime>
-using namespace sf;
-using namespace std;
 
-
-struct coordinats {
-	int x;
-	int y;
-};
-
-
-
-//Drawing the background
-void createBack(RenderWindow& window) {
-	//Drawing the background
-	Image map_image;
-	map_image.loadFromFile("./images/backwindow.jpg");
-	Texture map;
-	map.loadFromImage(map_image);
-	Sprite s_map;
-	s_map.setTexture(map);
-	s_map.setPosition(0, 0);
-	window.draw(s_map);
-}
-
-//Drawing the map
-void createMap(RenderWindow& window) {
-	//Drawing a map
-	Image map_image;//объект изображения для карты
-	map_image.loadFromFile("./images/grid.png");//load the file for the map
-	Texture map;
-	map.loadFromImage(map_image);
-	Sprite s_map;
-	s_map.setTexture(map);
-	s_map.setPosition(300, 160);
-
-	window.draw(s_map);
-}
+#include "BeginnersGarden.h"
+#include "PlantFactory.h"
+#include "ZombieFactory.h"
+#include "Time.h"
 
 
 int main()
 {
 	//Create a window, n*n
-	RenderWindow window(VideoMode(1200, 700), "Plants Vs Zombies");
+	RenderWindow window(VideoMode(1067, 600), "Plants Vs Zombies");
+
 	//Game icon
 	Image icon;
-	if (!icon.loadFromFile("./images/icon.png"))
-	{
+	if (!icon.loadFromFile("./images/icon.png")) {
 		return 1;
 	}
-	window.setIcon(32, 32, icon.getPixelsPtr());
+	window.setIcon(100, 100, icon.getPixelsPtr());
 
-	///////////////////////////////////////
-
-	//Game field (5*9)
-	//Point 137*79 - leftmost point
-	//length 41; width 53
-	const int ROWS = 5;
-	const int COLS = 9;
-
-	bool FIELD_GAME_STATUS[ROWS][COLS];
-
-	for (int i = 0; i < ROWS; i++) {
-    		for (int j = 0; j < COLS; j++) {
-        		FIELD_GAME_STATUS[i][j] = true;
-    		}
-	}
-
-	Clock timeMoney;
+	Level *bg = new BeginnersGarden();
 	
-
-
-	Clock clock;
-
-	while (window.isOpen())
-	{
-		float time = clock.getElapsedTime().asMicroseconds();
-		float moneyTime = timeMoney.getElapsedTime().asSeconds();
-
-		clock.restart();
-		time = time / 800;
-
+	//Game loop
+	while (window.isOpen()) {
+		//Check if the window is closed
 		Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == Event::Closed)
+		while (window.pollEvent(event)) {
+			if (event.type == Event::Closed) {
 				window.close();
+			}
 		}
 
-		//Create a background
-		createBack(window);
-		createMap(window);
-	
+		bg->drawGame(window);
+		bg->addPlant(window, event);
+		bg->actionPlants(window, event);
+		bg->actionZombies(window);
 
-		
-
-		window.setSize(sf::Vector2u(550, 340));
+		//Display the window
 		window.display();
 	}
-	return 0;
 }

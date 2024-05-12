@@ -5,14 +5,19 @@
 
 class PeaShooter : public Plant {
 private:
-    float fireInterval; // in seconds
+    // Information of the pea shot by the pea shooter
     int peaDamage;
+    float peaSpeed;
+    float lastPeaTime;
+    float peaInterval;
+    bool isPeaAttacking;
 
 public:
-    PeaShooter(int x = -1, int y = -1, int health = 5, int fireRate = 0.5, int peaDamage = 1);
-    ~PeaShooter() {}
-    void attack();
-    void print();
+    PeaShooter(int x = -1, int y = -1, float elapsedGameTime = 0);
+
+    void attack(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount);
+    // Not used in PeaShooter
+    int produce(RenderWindow &window, float elapsedGameTime, Event &event) { return 0; };
 };
 
 #endif // PEASHOOTER_H
