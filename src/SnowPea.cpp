@@ -17,6 +17,34 @@ SnowPea::SnowPea(int x, int y, float elapsedGameTime) {
     isPeaAttacking = false;
 }
 
+SnowPea::SnowPea(int posX, int posY, int health, int prjX, int prjY, float lastPeaTime, bool isPeaAttacking) {
+    model = "plt_snowpea.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+
+    prjModel = "prj_ice.png";
+    this->prjX = prjX;
+    this->prjY = prjY;
+
+    peaDamage = 15;
+    peaSpeed = 10;
+    this->lastPeaTime = lastPeaTime;
+    peaInterval = 2;
+    this->isPeaAttacking = isPeaAttacking;
+}
+
+void SnowPea::saveState(ofstream &file) {
+    file << "SnowPea" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << prjX << endl;
+    file << prjY << endl;
+    file << lastPeaTime << endl;
+    file << isPeaAttacking << endl;
+}
+
 void SnowPea::attack(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount) {
     // Find the nearest zombie
     Zombie *zombie = nullptr;
@@ -73,4 +101,3 @@ void SnowPea::attack(RenderWindow &window, float elapsedGameTime, Zombie **zombi
         isPeaAttacking = false;
     }
 }
-

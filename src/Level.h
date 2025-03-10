@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <fstream>
 #include "Time.h"
 #include "PlantFactory.h"
 #include "ZombieFactory.h"
@@ -9,6 +10,7 @@ class Level {
 protected:
     string levelName;
     string background;
+    string startImage;
     GameTime gameTime;
 
     PlantFactory* plantFactory[7];
@@ -18,7 +20,8 @@ protected:
     ZombieFactory* zombieFactory[4];
     Zombie** zombies;
     int *zombieGoTime;
-    int zombieCount;
+    int totalZombieCount;
+    int zombieCount[4];
 
     int lives;
     int sunPoints;
@@ -26,9 +29,14 @@ protected:
     bool cardSelected;
     int selectedCard;
 
+    bool isPaused;
+    float pauseTime;
+
+    void drawOnScreen(RenderWindow &window, string img, int x, int y, float scale);
+
 public:
     Level(string levelName = "Level Name", string background = "Background.png");
-    virtual void initZombies() = 0;
+    void initZombies();
 
     void addPlant(RenderWindow &window, Event &event);
 
@@ -45,6 +53,16 @@ public:
     void drawPlants(RenderWindow &window);
     void drawGrid(RenderWindow &window);
 
+    void toggleSave(RenderWindow &window, Event &event);
+    void togglePause(RenderWindow &window, Event &event);
+
+    void saveState(string filename);
+    void loadPlants(string plantsData);
+    void loadZombies(string zombiesData);
+
+    int play(RenderWindow &window, Event &event);
+
+    ~Level();
 };
 
 #endif // LEVEL_H

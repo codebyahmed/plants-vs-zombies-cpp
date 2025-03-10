@@ -25,6 +25,7 @@ public:
     int getPosX() const;
     int getPosY() const;
     int getCost() const;
+    bool getIsAvailable() const;
 
     FloatRect getBounds();
 

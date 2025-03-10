@@ -13,7 +13,9 @@ private:
 
 public:
     Sunflower(int x = -1, int y = -1, float elapsedGameTime = 0);
+    Sunflower(int posX, int posY, int health, int prjX, int prjY, float lastSunTime, bool isSunAvailable);
 
+    void saveState(ofstream &file) override;
     int produce(RenderWindow &window, float elapsedGameTime, Event &event);
 
     // Not used in Sunflower

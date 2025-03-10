@@ -18,6 +18,35 @@ FumeShroom::FumeShroom(int x, int y, float elapsedGameTime) {
     isShrooming = false;
 }
 
+FumeShroom::FumeShroom(int posX, int posY, int health, int prjX, int prjY, float lastShroomTime, bool isShrooming) {
+    model = "plt_fumeshroom.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+
+    prjModel = "prj_fume.png";
+    this->prjX = prjX;
+    this->prjY = prjY;
+
+    shroomDamage = 10;
+    shroomSpeed = 6;
+    this->lastShroomTIme = lastShroomTime;
+    shroomInterval = 2;
+    shroomRange = 320; // 4 boxes
+    this->isShrooming = isShrooming;
+}
+
+void FumeShroom::saveState(ofstream &file) {
+    file << "FumeShroom" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << prjX << endl;
+    file << prjY << endl;
+    file << lastShroomTIme << endl;
+    file << isShrooming << endl;
+}
+
 // Attacks all zombies within shroomRange, goes through zombies
 // Use logic from PeaShooter::attack but modify it to pass through zombies
 void FumeShroom::attack(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount) {

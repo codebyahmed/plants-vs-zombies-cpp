@@ -16,6 +16,35 @@ CherryBomb::CherryBomb(int x, int y, float elapsedGameTime) {
     creationTime = elapsedGameTime;
 }
 
+CherryBomb::CherryBomb(int posX, int posY, int health, int prjX, int prjY, int blastRadius, int blastDamage, int blastTime, float creationTime) {
+    model = "plt_cherrybomb.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+
+    prjModel = "prj_boom.png";
+    this->prjX = prjX;
+    this->prjY = prjY;
+
+    this->blastRadius = blastRadius;
+    this->blastDamage = blastDamage;
+    this->blastTime = blastTime;
+    this->creationTime = creationTime;
+}
+
+void CherryBomb::saveState(ofstream &file) {
+    file << "CherryBomb" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << prjX << endl;
+    file << prjY << endl;
+    file << blastRadius << endl;
+    file << blastDamage << endl;
+    file << blastTime << endl;
+    file << creationTime << endl;
+}
+
 void CherryBomb::attack(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount) {
     if (elapsedGameTime - creationTime >= blastTime) {
         // Draw the explosion

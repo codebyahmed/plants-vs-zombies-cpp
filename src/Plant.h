@@ -1,6 +1,7 @@
 #ifndef PLANT_H
 #define PLANT_H
 
+#include <fstream>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 using namespace std;
@@ -34,6 +35,8 @@ public:
     bool isAlive();
 
     FloatRect getBounds();
+
+    virtual void saveState(ofstream &file) = 0;
 
     //All
     virtual void getAttacked(RenderWindow &window, float elapsedGameTime, Zombie **zombies, int zombieCount);

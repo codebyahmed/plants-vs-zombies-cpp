@@ -16,6 +16,33 @@ Sunflower::Sunflower(int x, int y, float elapsedGameTime) {
     isSunAvailable = false;
 }
 
+Sunflower::Sunflower(int posX, int posY, int health, int prjX, int prjY, float lastSunTime, bool isSunAvailable) {
+    model = "plt_sunflower.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+
+    prjModel = "prj_sun.png";
+    this->prjX = prjX;
+    this->prjY = prjY;
+
+    sunValue = 25;
+    this->lastSunTime = lastSunTime;
+    sunInterval = 3;
+    this->isSunAvailable = isSunAvailable;
+}
+
+void Sunflower::saveState(ofstream &file) {
+    file << "Sunflower" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << prjX << endl;
+    file << prjY << endl;
+    file << lastSunTime << endl;
+    file << isSunAvailable << endl;
+}
+
 int Sunflower::produce(RenderWindow &window, float elapsedGameTime, Event &event) {
     if (!isSunAvailable) {
         if (elapsedGameTime - lastSunTime >= sunInterval) {

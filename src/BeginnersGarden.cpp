@@ -2,73 +2,64 @@
 
 BeginnersGarden::BeginnersGarden() {
     levelName = "Beginner's Garden";
-    background = "bg_beginnersgarden.png";
+    background = "bg_1.png";
+    startImage = "scr_start.png";
 
     plantFactory[0] = new PeaShooterFactory(330, 0);
     plantFactory[1] = new SunflowerFactory(410, 0);
     plantFactory[2] = new RepeaterFactory(490, 0);
-    plantFactory[3] = new WallnutFactory(570, 0);
-    plantFactory[4] = new SnowPeaFactory(650, 0);
-    plantFactory[5] = new CherryBombFactory(730, 0);
-    plantFactory[6] = new FumeShroomFactory(810, 0);
-    plants = new Plant*[45]; // 9 columns * 5 rows = 45
+    plantFactory[3] = new WallnutFactory(570, 0, false);
+    plantFactory[4] = new SnowPeaFactory(650, 0, false);
+    plantFactory[5] = new CherryBombFactory(730, 0, false);
+    plantFactory[6] = new FumeShroomFactory(810, 0, false);
+    plants = new Plant*[50];
     plantCount = 0;
+
+    totalZombieCount = 10;
+    zombieCount[0] = 7;
+    zombieCount[1] = 3;
+    zombieFactory[0] = new SimpleZombieFactory();
+    zombieFactory[1] = new FootballZombieFactory();
+    zombieFactory[2] = new FlyingZombieFactory();
+    zombieFactory[3] = new DancingZombieFactory();
+    zombies = new Zombie*[totalZombieCount];
+    zombieGoTime = new int[totalZombieCount];
+
+    lives = 3;
+    this->sunPoints = 500;
+    this->isPaused = false;
+
+    initZombies();
+}
+
+BeginnersGarden::BeginnersGarden(int lives, int sunPoints, float elapsedTime, int plantCount, int zombieCount, string plantsData, string zombiesData) {
+    levelName = "Beginner's Garden";
+    background = "bg_1.png";
+    startImage = "scr_start.png";
+
+    plantFactory[0] = new PeaShooterFactory(330, 0);
+    plantFactory[1] = new SunflowerFactory(410, 0);
+    plantFactory[2] = new RepeaterFactory(490, 0);
+    plantFactory[3] = new WallnutFactory(570, 0, false);
+    plantFactory[4] = new SnowPeaFactory(650, 0, false);
+    plantFactory[5] = new CherryBombFactory(730, 0, false);
+    plantFactory[6] = new FumeShroomFactory(810, 0, false);
+    plants = new Plant*[50];
 
     zombieFactory[0] = new SimpleZombieFactory();
     zombieFactory[1] = new FootballZombieFactory();
     zombieFactory[2] = new FlyingZombieFactory();
     zombieFactory[3] = new DancingZombieFactory();
-    zombies = new Zombie*[10]; // 10 zombies for first level
-    zombieGoTime = new int[10];
-    zombieCount = 0;
+    this->totalZombieCount = zombieCount;
+    zombies = new Zombie*[totalZombieCount];
+    zombieGoTime = new int[totalZombieCount];
 
-    lives = 3;
-    this->sunPoints = 500;
+    this->lives = lives;
+    this->sunPoints = sunPoints;
+    this->isPaused = false;
+    gameTime.setStartTime(elapsedTime);
+    this->plantCount = plantCount;
 
-    initZombies();
-}
-
-void BeginnersGarden::initZombies() {
-    //Initialise a 1D array of int, size 5 with y values of block positions
-    int verticalPos[5] = { 100, 194, 288, 382, 476};
-
-    // Create 10 simple zombies and give them a random y position
-    for (int i = 0; i < 10; i++) {
-        int randomY = verticalPos[rand() % 5];
-        int goTime = rand() % 60;
-        
-        // Check if the go time is already used by another zombie
-        bool isGoTimeUsed = false;
-        for (int j = 0; j < i; j++) {
-            if (zombieGoTime[j] == goTime) {
-                isGoTimeUsed = true;
-                break;
-            }
-        }
-        
-        // If go time is already used, generate a new one
-        while (isGoTimeUsed) {
-            goTime = rand() % 60;
-            isGoTimeUsed = false;
-            for (int j = 0; j < i; j++) {
-                if (zombieGoTime[j] == goTime) {
-                    isGoTimeUsed = true;
-                    break;
-                }
-            }
-        }
-        
-        // Create a new random zombie
-        int choice = rand() % 4;
-        if (choice == 0) 
-            zombies[i] = zombieFactory[0]->createZombie(900, randomY);
-        else if (choice == 1)
-            zombies[i] = zombieFactory[1]->createZombie(900, randomY);
-        else if (choice == 2)
-            zombies[i] = zombieFactory[2]->createZombie(900, randomY);
-        else
-            zombies[i] = zombieFactory[3]->createZombie(900, randomY);
-        zombieGoTime[i] = goTime;
-        zombieCount++;
-    }
+    loadPlants(plantsData);
+    loadZombies(zombiesData);
 }

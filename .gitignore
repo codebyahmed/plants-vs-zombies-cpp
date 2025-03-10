@@ -1,3 +1,6 @@
 test
 .vscode
 app
+obj/
+documents/
+save.txt

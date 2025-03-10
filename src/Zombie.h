@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 using namespace sf;
 using namespace std;
 
@@ -42,6 +43,8 @@ public:
     void setFrozenTime(float time);
 
     virtual bool isFlying() = 0;
+
+    virtual void saveState(ofstream &file) = 0;
 
     // Move the zombie
     virtual void move(float elapsedGameTime) = 0;

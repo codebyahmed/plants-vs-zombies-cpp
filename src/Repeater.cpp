@@ -21,6 +21,42 @@ Repeater::Repeater(int x, int y, float elapsedGameTime) {
     isPeaAttacking[1] = false;
 }
 
+Repeater::Repeater(int posX, int posY, int health, int prjX, int prjY, int prj1X, int prj1Y, float lastPeaTime0, float lastPeaTime1, bool isPeaAttacking0, bool isPeaAttacking1) {
+    model = "plt_repeater.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+
+    prjModel = "prj_pea.png";
+    this->prjX = prjX;
+    this->prjY = prjY;
+    this->prj1X = prj1X;
+    this->prj1Y = prj1Y;
+
+    peaDamage = 25;
+    peaSpeed = 12;
+    lastPeaTime[0] = lastPeaTime0;
+    lastPeaTime[1] = lastPeaTime1;
+    peaInterval = 1.5;
+    isPeaAttacking[0] = isPeaAttacking0;
+    isPeaAttacking[1] = isPeaAttacking1;
+}
+
+void Repeater::saveState(ofstream &file) {
+    file << "Repeater" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << prjX << endl;
+    file << prjY << endl;
+    file << prj1X << endl;
+    file << prj1Y << endl;
+    file << lastPeaTime[0] << endl;
+    file << lastPeaTime[1] << endl;
+    file << isPeaAttacking[0] << endl;
+    file << isPeaAttacking[1] << endl;
+}
+
 // The Repeater shoots two peas at a time
 // Use logic from PeaShooter.cpp to shoot two peas instead of one
 // The 2nd pea is shot 0.5 seconds after the 1st pea

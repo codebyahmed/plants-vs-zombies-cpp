@@ -18,6 +18,10 @@ int PlantFactory::getCost() const {
     return cost;
 }
 
+bool PlantFactory::getIsAvailable() const {
+    return isAvailable;
+}
+
 FloatRect PlantFactory::getBounds() {
     return FloatRect(posX, posY, 56, 82);
 }

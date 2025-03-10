@@ -4,11 +4,10 @@
 #include "Level.h"
 
 class BeginnersGarden : public Level {
+    
 public:
     BeginnersGarden();
-    void initZombies() override;
-
-    
+    BeginnersGarden(int lives, int sunPoints, float elapsedTime, int plantCount, int zombieCount, string plants, string zombies);
 };
 
 #endif // BEGINNERSGARDEN_H

@@ -12,9 +12,15 @@ private:
 public:
     // Constructor
     GameTime();
+
+    //Setter
+    void setStartTime(float time);
     
     // Get the elapsed time since the start of the game
     float elapsedTime() const;
+
+    // Add time to the start time
+    void addTime(float time);
     
     // Reset the start time
     void reset();

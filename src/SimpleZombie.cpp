@@ -8,6 +8,30 @@ SimpleZombie::SimpleZombie(int x, int y) {
     speed = 0.75;
     attackDamage = 25;
     lastAttackTime = 0;
+    frozen = false;
+    frozenTime = 0;
+}
+
+SimpleZombie::SimpleZombie(float posX, float posY, int health, bool isAttacking, bool reached, bool frozen, float frozenTime) {
+    model = "zmb_simple.png";
+    this->posX = posX;
+    this->posY = posY;
+    this->health = health;
+    this->isAttacking = isAttacking;
+    this->reached = reached;
+    this->frozen = frozen;
+    this->frozenTime = frozenTime;
+}
+
+void SimpleZombie::saveState(ofstream &file) {
+    file << "SimpleZombie" << endl;
+    file << posX << endl;
+    file << posY << endl;
+    file << health << endl;
+    file << isAttacking << endl;
+    file << reached << endl;
+    file << frozen << endl;
+    file << frozenTime << endl;
 }
 
 void SimpleZombie::move(float elapsedGameTime) {
